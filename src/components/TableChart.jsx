@@ -270,14 +270,18 @@ export default class TableChart extends BaseChart {
                 pages,
             };
         }
+        let sortable = true;
+        if (config.sortable === false) {
+            sortable = false;
+        }
 
         return (
             <div>
                 {
                     config.filterable ?
-                        <div className={'filter-search-container'} style={{ width: '100%', marginBottom: 2 }} >
+                        <div className={this.props.theme === 'light' ? 'lightTheme filter-search-container' : 'darkTheme filter-search-container'} >
                             <input
-                                className={'filter-search'}
+                                className={this.props.theme === 'light' ? 'lightTheme filter-search' : 'darkTheme filter-search'}
                                 type="text"
                                 onChange={(evt) => {
                                     this.setState({ filterValue: evt.target.value });
@@ -291,6 +295,7 @@ export default class TableChart extends BaseChart {
                         data={filteredData}
                         columns={tableConfig}
                         showPagination={config.pagination === true}
+                        sortable={sortable}
                         minRows={DAFAULT_ROW_COUNT_FOR_PAGINATION}
                         className={this.props.theme === 'light' ? 'lightTheme' : 'darkTheme'}
                         getTrProps={
